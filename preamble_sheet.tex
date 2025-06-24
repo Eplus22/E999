@@ -1,0 +1,103 @@
+\usepackage[nswissgerman]{babel}
+
+\usepackage{ctex}
+\setmainfont{Times New Roman}
+\setCJKmainfont{LXGW WenKai}
+
+% 3 column landscape layout with fewer margins
+\usepackage[landscape, left=0.75cm, top=1cm, right=0.75cm, bottom=1.5cm, footskip=15pt]{geometry}
+\usepackage{flowfram}
+\ffvadjustfalse
+\setlength{\columnsep}{1cm}
+\Ncolumn{3}
+
+% define nice looking boxes
+\usepackage[many]{tcolorbox}
+
+% a base set, that is then customised
+\tcbset {
+  base/.style={
+    boxrule=0mm,
+    leftrule=1mm,
+    left=1.75mm,
+    arc=0mm, 
+    fonttitle=\bfseries, 
+    colbacktitle=black!10!white, 
+    coltitle=black, 
+    toptitle=0.75mm, 
+    bottomtitle=0.25mm,
+    title={#1}
+  }
+}
+
+\definecolor{brandblue}{rgb}{0.34, 0.7, 1}
+\newtcolorbox{mainbox}[1]{
+  colframe=brandblue, 
+  base={#1}
+}
+
+\newtcolorbox{subbox}[1]{
+  colframe=black!20!white,
+  base={#1}
+}
+
+% Mathematical typesetting & symbols
+\usepackage{amsthm, mathtools, amssymb} 
+\usepackage{marvosym, wasysym}
+\allowdisplaybreaks
+
+% Tables
+\usepackage{tabularx, multirow}
+\usepackage{booktabs}
+\renewcommand*{\arraystretch}{2}
+
+% Make enumerations more compact
+\usepackage{enumitem}
+\setitemize{itemsep=0.5pt}
+\setenumerate{itemsep=0.75pt}
+
+% To include sketches & PDFs
+\usepackage{graphicx}
+
+% For hyperlinks
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true
+}
+
+% For Code
+\usepackage{listings}
+\usepackage{xcolor}
+
+% 定义通用样式
+\lstdefinestyle{commonstyle}{
+  keywordstyle=\bfseries,              % 关键字加粗
+  basicstyle=\ttfamily,                % 基本字体
+  commentstyle=\color{gray},           % 注释颜色
+  stringstyle=\color{black},           % 字符串颜色正常
+  frame=none,                          % 无边框
+  showstringspaces=false               % 隐藏字符串中的空格标识
+}
+
+% 针对不同语言定义样式
+\lstdefinestyle{python}{
+  style=commonstyle,                   % 继承通用样式
+  language=Python                      % 设置语言为 Python
+}
+
+\lstdefinestyle{cpp}{
+  style=commonstyle,                   % 继承通用样式
+  language=C++                         % 设置语言为 C++
+}
+
+\lstdefinestyle{markdown}{
+  style=commonstyle,                   % 继承通用样式
+  language=Markdown                    % 设置语言为 Markdown
+}
+
+\lstdefinestyle{latex}{
+  style=commonstyle,                   % 继承通用样式
+  language=[LaTeX]TeX                  % 设置语言为 LaTeX
+}
+
+\author{Ning}

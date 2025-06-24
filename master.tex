@@ -1,0 +1,22 @@
+\documentclass{tufte-handout}
+\input{preamble.tex}
+
+\title{\CJKfamily{kai} 笔记}
+\date{\normalsize\today}
+
+\begin{document}
+    \newgeometry{a4paper, margin=1in}
+    \maketitle
+    % \input{../../TheQuotes/TheLifeOfMortals}
+    \tableofcontents
+    \listthem{概念}{concept}
+    \listthem{定义}{definition}
+    \listthem{定理}{theorem}
+    \listthem{例题}{eg}
+    \listthem{大例题}{xeg}
+    \listthem{警告}{warning}
+    \restoregeometry
+    \newpage
+    \input{TeXFiles/name.tex}
+    % \includepdf[pages=-, angle=90, fitpaper=true]{cheatsheet}  % 旋转并适应页面
+\end{document}

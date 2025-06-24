@@ -1,0 +1,9 @@
+*.aux
+*.log
+*.out
+*.toc
+*.pdf
+*.ipynb
+temp
+# Ignore all repositories
+[0-9][0-9]*

@@ -1,0 +1,362 @@
+%%% ==================== BASICS ==================== %%%
+\usepackage{datetime}
+\usepackage[utf8]{inputenc}
+\usepackage{textcomp}
+\usepackage{url}
+\usepackage{graphicx}
+\usepackage{float}
+\usepackage{booktabs} % \toprule \midrule \bottom rule
+\usepackage{enumitem}
+\setlist{nosep} % tighten enumerate and itemize
+% \usepackage{newunicodechar} % unicode
+\usepackage{emptypage}
+\usepackage{subcaption}
+\usepackage{multicol}
+\usepackage{pdfpages}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks,
+    linkcolor={black},
+    citecolor={black},
+    urlcolor={red!80!black}
+}
+% indent
+\usepackage{indentfirst} % Make sure the first paragraph also indent
+% \setlength{\parindent}{2em} % Set paragraph indent 2em
+
+%%% ==================== Math Enhance ==================== %%%
+\usepackage{amsmath, amsfonts, mathtools, amsthm, amssymb}
+\setcounter{MaxMatrixCols}{30} % FUCKING IDIOT, WHY YOU MOTHERFUCKERS SET THIS RESTRICTION AND THE ERROR MESSAGE IS SOOOOOOOOOOOOOOOOOO UNINFORMATIVE https://tex.stackexchange.com/questions/3519/how-to-use-more-than-10-tab-stops-in-bmatrix-or-other-amsmath-matrix-environment
+\usepackage{mathrsfs}
+\usepackage{cancel}
+\usepackage{bm}
+\usepackage{systeme}
+
+%%% ==================== Font & Languages ==================== %%%
+\usepackage[T1]{fontenc}
+% font
+\usepackage{ctex}
+\setmainfont{Times New Roman}
+% \setCJKmainfont{LXGW WenKai} % All LXGW Wenkai
+\setCJKmainfont[BoldFont={LXGW WenKai Bold}]{SimSun}
+\setCJKfamilyfont{kai}[AutoFakeBold]{KaiTi}
+\newfontfamily\Chancery{URW Chancery L}
+\newfontfamily\LXGW{LXGW WenKai}
+\usepackage{newtxmath}  % Times New Roman as Math font
+
+%%% ==================== Layout ==================== %%%
+% text & bg color (eye-friendly)
+% \usepackage[usenames,dvipsnames]{xcolor}
+% \definecolor{myBGcolor}{HTML}{F6F0D6}
+% % \definecolor{myTextcolor}{HTML}{6B4226} % 4F452C
+% \pagecolor{myBGcolor}
+% geometry
+\usepackage{geometry}
+\geometry{
+    b5paper,
+    left=13mm,
+    right=2.4in,
+    top=20mm,
+    bottom=20mm,
+    headheight=15pt,
+    headsep=12pt,
+    footskip=20pt,    % distance between foot and main content
+    % textwidth=120mm, % main text block
+    marginparsep=8mm, % gutter between main text block and margin notes
+    marginparwidth=45mm % width of margin notes
+}
+\linespread{1.4}
+% fancy headers
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[RE,LO]{}
+\fancyfoot[LE,RO]{\thepage}
+\fancyfoot[C]{\leftmark}
+\fancyhead[C]{{\Large\Chancery What's done is done.}}
+
+
+%%% ==================== Custom Commands ==================== %%%
+\usepackage{xparse} % extend command defination
+% quote environment
+\NewDocumentEnvironment{zoe}{}
+{
+  \par\vspace{\baselineskip}
+  \CJKfamily{kai}
+  \setlength{\parindent}{4em}
+}
+{%
+  \par\vspace{\baselineskip} 
+}
+% line spread
+\usepackage{setspace}
+% marginnote
+\usepackage{etoolbox} % condition
+\newcommand{\fine}[2][0]{
+  \ifdim #1pt=0pt
+    \marginnote[1.5\baselineskip]{\setstretch{1.2}\CJKfamily{kai}\small #2}
+  \else
+    \marginnote[#1\baselineskip]{\setstretch{1.2}\CJKfamily{kai}\small #2}
+  \fi
+}
+% chord
+\newcommand\chord[2][l]{%
+  \makebox[0pt][#1]{\begin{tabular}[b]{@{}l@{}}#2\\\mbox{}\end{tabular}}}
+% poem
+\usepackage{verse}
+\newcommand{\attrib}[1]{%
+\nopagebreak{\raggedleft\footnotesize #1\par}}
+\renewcommand{\poemtitlefont}{\normalfont\large\itshape\centering}
+% Q.E.D.
+\newcommand{\qedz}{\hfill $\blacksquare$}
+
+%%% ==================== Code Environment ==================== %%%
+\usepackage{listings}
+\lstdefinestyle{commonstyle}{
+  keywordstyle=\bfseries,              % bold keyword 
+  basicstyle=\ttfamily,                % basic font
+  commentstyle=\color{gray},           % comment color
+  stringstyle=\color{black},           % stirng color
+  frame=none,                          % no frame
+  showstringspaces=false               % hiden space indentifier in the string 
+}
+% 针对不同语言定义样式
+\lstdefinestyle{py}{
+  style=commonstyle,
+  language=python  
+}
+\lstdefinestyle{cpp}{
+  style=commonstyle,
+  language=CPP
+}
+\lstdefinestyle{h}{
+  style=commonstyle,
+  language=CPP
+}
+\lstdefinestyle{c}{
+  style=commonstyle,            
+  language=C                      
+}
+\lstdefinestyle{shell}{
+  style=commonstyle,            
+  language=Shell
+}
+\newcommand{\includecode}[5][py]{
+    \lstinputlisting[
+        style=#1, % default using .py
+        caption={#2},
+        captionpos=b,
+        firstline=#3,
+        lastline=#4,
+        breaklines=true,
+        breakatwhitespace=true,
+        lineskip=-0.3ex,
+        xleftmargin=2em,
+        xrightmargin=2em
+    ]{#5}
+}
+
+%%% ==================== Titles ==================== %%%
+\setcounter{secnumdepth}{3}  % number to subsubsection
+\setcounter{tocdepth}{3}     % TOC to subsubsection
+\usepackage{titlesec}
+\titleformat{\section}
+  {\normalfont\Large\bfseries}
+  {\thesection}{1em}{}
+\titleformat{\subsection}
+  {\normalfont\large\bfseries}
+  {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries}
+  {\thesubsubsection}{1em}{}
+\usepackage{tocloft}
+\setlength{\cftbeforesecskip}{6pt}    % section skip
+\setlength{\cftbeforesubsecskip}{4pt} % subsection skip
+
+%%% ==================== Theorems Environment ==================== %%%
+\makeatother
+\usepackage{thmtools}
+\usepackage[framemethod=TikZ]{mdframed}
+\mdfsetup{skipabove=1em,skipbelow=0em}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{ForestGreen!70!black}, bodyfont=\normalfont,
+    postheadhook={\leavevmode\\},
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=ForestGreen, backgroundcolor=none, %ForestGreen!5,
+    }
+]{thmgreenbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{NavyBlue!70!black}, bodyfont=\normalfont,
+    postheadhook={\leavevmode\\},
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=NavyBlue, backgroundcolor=none, %NavyBlue!5,
+    }
+]{thmbluebox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{RawSienna!70!black}, bodyfont=\normalfont,
+    postheadhook={\leavevmode\\},
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=RawSienna, backgroundcolor=none, %RawSienna!5,
+    }
+]{thmredbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{purple!80!black}, bodyfont=\normalfont,
+    bodyfont=\normalfont,
+    postheadhook={\leavevmode\\},
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=purple, backgroundcolor=none,
+    }
+]{thmpurplebox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{BurntOrange!80!black}, 
+    bodyfont=\normalfont,
+    postheadhook={\leavevmode\\},
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=BurntOrange, 
+        backgroundcolor=none, %BurntOrange!5,
+    }
+]{thmorangebox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{Red!90!black}, 
+    bodyfont=\normalfont,
+    postheadhook={\leavevmode\\},
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=Red, 
+        backgroundcolor=none, %Red!5,
+    }
+]{thmalertredbox}
+
+\declaretheoremstyle[
+    headfont=\bfseries\sffamily\color{Goldenrod!80!black}, 
+    bodyfont=\normalfont,
+    postheadhook={\leavevmode\\},
+    mdframed={
+        linewidth=2pt,
+        rightline=false, topline=false, bottomline=false,
+        linecolor=Goldenrod, 
+        backgroundcolor=none, %Goldenrod!5,
+    }
+]{thmyellowbox}
+
+\declaretheorem[style=thmgreenbox, numbered=yes, name=Def]{definition}
+\declaretheorem[style=thmredbox, numbered=yes, name=Algo]{algo}
+\declaretheorem[style=thmbluebox, numbered=yes, name=Eg]{eg}
+\declaretheorem[style=thmpurplebox, numbered=yes, name=XEg]{xeg}
+\declaretheorem[style=thmredbox, numbered=yes, name=Th]{theorem}
+\declaretheorem[style=thmredbox, numbered=yes, name=Lemma]{lemma}
+\declaretheorem[style=thmredbox, numbered=yes, name=Cor]{corollary}
+\declaretheorem[style=thmblueline, numbered=no, name=Remark]{remark}
+\declaretheorem[style=thmalertredbox, numbered=yes, name=Target]{target}
+\declaretheorem[style=thmalertredbox, numbered=yes, name=Warning]{warning}
+\declaretheorem[style=thmorangebox, numbered=yes, name=Concept]{concept}
+
+\makeatletter
+\def\ll@xeg{
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi}
+\makeatother
+
+\makeatletter
+\def\ll@eg{
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi}
+\makeatother
+
+\makeatletter
+\def\ll@theorem{
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi}
+\makeatother
+
+\makeatletter
+\def\ll@definition{
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi}
+\makeatother
+
+\makeatletter
+\def\ll@algo{
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi}
+\makeatother
+
+\makeatletter
+\def\ll@concept{
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi}
+\makeatother
+
+\makeatletter
+\def\ll@target{
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi}
+\makeatother
+
+\makeatletter
+\def\ll@warning{
+  \protect\numberline{\csname the\thmt@envname\endcsname}%
+  \ifx\@empty\thmt@shortoptarg
+    \thmt@thmname
+  \else
+    \thmt@shortoptarg
+  \fi}
+\makeatother
+
+\newcommand{\listthem}[2]{
+    \renewcommand{\listtheoremname}{#1}
+    \listoftheorems[ignoreall, show={#2}]
+}
+
+\AtBeginDocument{
+  \renewcommand\contentsname{目录}
+  \renewcommand\figurename{图}
+  \renewcommand\tablename{目录}
+  \renewcommand\lstlistingname{代码}
+  \renewcommand{\abstractname}{摘要} % 修改摘要标题
+}
