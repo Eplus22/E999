@@ -52,7 +52,7 @@ patterns = {
     'href': re.compile(r'\[([^\]]+)\]\(([^)]+)\)'),
     'qed': re.compile(r'\b(Q\.?E\.?D\.?)(\.|!|\?|\s)*$', re.MULTILINE),
     'quote': re.compile(r'^(>.*(?:\n|$))+', re.MULTILINE),
-    'fullwidth_block': re.compile(r'~~(?:u\n|\n)(.*?)~~(?:d\n|\n)', re.DOTALL)
+    'fullwidth_block': re.compile(r'~~(?:u|\n)(.*?)~~(?:d|\n)', re.DOTALL)
 }
 
 # =============================================================================
@@ -174,7 +174,7 @@ def convert_math(text):
     return text
 
 def convert_images(text):
-    """Convert image references to LaTeX figure environments."""
+    """Convert image references to LaTeX figure environments with captions."""
     def replace_match(match):
         raw_path = match.group(1).strip()
         options = match.group(2)
@@ -184,10 +184,24 @@ def convert_images(text):
         else:
             path = f"Assets/Images/{raw_path}"
 
+        # Extract filename without extension for caption
+        filename = os.path.splitext(os.path.basename(raw_path))[0]
+        
         if options and "fullwidth" in options:
-            return f"{{\\centering\\begin{{figure*}}[h]\n\\includegraphics[width=0.5\\textwidth]{{{path}}}\n\\end{{figure*}}}}"
+            return (
+                f"{{\\centering\\begin{{figure*}}[h]\n"
+                f"\\includegraphics[width=0.5\\textwidth]{{{path}}}\n"
+                f"\\caption{{{filename}}}\n"
+                f"\\end{{figure*}}}}"
+            )
         else:
-            return f"\\begin{{figure*}}[h]\n\\centering\n\\includegraphics[width=0.5\\textwidth]{{{path}}}\n\\end{{figure*}}\\par"
+            return (
+                f"\\begin{{figure*}}[h]\n"
+                f"\\centering\n"
+                f"\\includegraphics[width=0.5\\textwidth]{{{path}}}\n"
+                f"\\caption{{{filename}}}\n"
+                f"\\end{{figure*}}\\par"
+            )
 
     pattern = r'!\[\[([^\|\]]+)(?:\|([^]]+))?\]\]'
     return re.sub(pattern, replace_match, text)
@@ -214,11 +228,14 @@ def convert_codes(text):
         file_name = file_path.split('/')[-1]
         extension = os.path.splitext(file_name)[1][1:]
         
-        return (f"\\includecode[{extension}]"
+        return ("\\vspace{{10pt}}\n"
+                f"\\includecode[{extension}]"
                 f"{{{escape_underscores(label)}}}"
                 f"{{{start_line}}}"
                 f"{{{end_line}}}"
-                f"{{{process_path(escape_underscores(file_path))}}}")
+                f"{{{process_path(escape_underscores(file_path))}}}"
+                "\\vspace{{10pt}}\n"
+        )
 
     return code_pattern.sub(replacement, text)
 

@@ -28,9 +28,9 @@ mkdir -p Assets/Images
 mkdir -p Assets/Books
 
 # do not overrides current file
-cp -n ../master.tex .
-cp -n ../.gitignore .
-cp -n ../report.tex .
+cp --update=none ../master.tex .
+cp --update=none ../.gitignore .
+cp --update=none ../report.tex .
 
 # content_gen.py
 [ ! -f content_gen.py ] && ln -s "$content_gen" ./content_gen.py
@@ -44,4 +44,4 @@ cd MdFiles
 cd ../CheatSheets
 # symbolic link to md2ch.py
 [ ! -f md2ch.py ] && ln -s "$md2ch" ./md2ch.py
-cp -n ../../cheatsheet.tex .
+cp --update=none ../../cheatsheet.tex .

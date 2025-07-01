@@ -62,7 +62,7 @@ if [ "$skip_compile" = false ]; then
         calc_duration $mdtoch_start $mdtoch_end "CheatSheet Convert & Compiling"
     fi
     calc_duration $final_start $final_end "Main File Compiling"
-    calc_duration $start_time $end_time "All Consume"
+    calc_duration $start_time $end_time "All"
     echo "Q.E.D."
     echo "============================================================"
 fi
